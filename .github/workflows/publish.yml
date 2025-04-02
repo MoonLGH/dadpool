@@ -9,9 +9,9 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@latest
     - name: Set Node.js 16
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@latest
       with:
         node-version: 16
     - name: Install dependencies
