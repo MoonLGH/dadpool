@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - Pemesanan Makanan & Minuman</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.7/dist/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Sidebar -->
+    <div class="flex">
+        <div class="bg-blue-600 text-white w-64 min-h-screen p-6">
+            <h2 class="text-2xl font-semibold mb-8">Admin Panel</h2>
+            <ul>
+                <li><a href="panel.html" class="block py-2 px-4 rounded-lg hover:bg-blue-700">Dashboard</a></li>
+                <li><a href="editstok.html" class="block py-2 px-4 rounded-lg hover:bg-blue-700">Kelola Stok</a></li>
+                <li><a href="logspemesanan.html" class="block py-2 px-4 rounded-lg hover:bg-blue-700">Logs Pemesanan</a></li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex-1 p-6">
+            <h2 class="text-3xl font-semibold mb-6">Dashboard</h2>
+            
+            <!-- Daftar Pesanan -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold">Daftar Pesanan</h3>
+                <table class="min-w-full mt-4 bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="py-2 px-4 text-left">Nomor Meja</th>
+                            <th class="py-2 px-4 text-left">Pesanan</th>
+                            <th class="py-2 px-4 text-left">Total Harga</th>
+                            <th class="py-2 px-4 text-left">Status</th>
+                            <th class="py-2 px-4 text-left">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderTable">
+                        <!-- Pesanan akan dimuat di sini -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // Sample orders data (this can be fetched from a server later)
+        const orders = [
+            { tableNumber: "A1", items: ["Nasi Goreng", "Es Teh"], total: 35000, status: "Pending", id: 1 },
+            { tableNumber: "A2", items: ["Mie Goreng", "Es Jeruk"], total: 34000, status: "Pending", id: 2 },
+            // Add more orders as needed
+        ];
+
+        // Get table body element
+        const orderTable = document.getElementById('orderTable');
+
+        // Render orders into the table
+        function renderOrders() {
+            orderTable.innerHTML = '';
+
+            orders.forEach(order => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+                row.innerHTML = `
+                    <td class="py-2 px-4">${order.tableNumber}</td>
+                    <td class="py-2 px-4">${order.items.join(', ')}</td>
+                    <td class="py-2 px-4">Rp ${order.total.toLocaleString()}</td>
+                    <td class="py-2 px-4">${order.status}</td>
+                    <td class="py-2 px-4">
+                        <button class="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition duration-200" onclick="markAsFinished(${order.id})">Selesai</button>
+                    </td>
+                `;
+                orderTable.appendChild(row);
+            });
+        }
+
+        // Mark order as finished
+        function markAsFinished(orderId) {
+            const order = orders.find(o => o.id === orderId);
+            if (order) {
+                order.status = "Selesai";
+                renderOrders(); // Re-render the orders table
+                alert(`Pesanan meja ${order.tableNumber} telah selesai.`);
+            }
+        }
+
+        // Initialize table
+        renderOrders();
+    </script>
+
+</body>
+</html>

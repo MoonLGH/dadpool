@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Pemesanan Makanan & Minuman</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.7/dist/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Centered Login Form -->
+    <div class="flex items-center justify-center min-h-screen">
+        <div class="bg-white p-8 rounded-lg shadow-lg w-96">
+            <img src="./assets/img/dadpool.jpg" style="justify-self: center;" class="rounded-full align-center text-center">
+            <h2 class="text-2xl font-semibold text-center mb-6">Selamat Datang Pemesanan Di Dadpool</h2>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="nomorMeja" class="block text-sm font-medium text-gray-700">Masukkan Nomor Meja</label>
+                    <input 
+                        type="text" 
+                        id="nomorMeja" 
+                        name="nomorMeja" 
+                        required 
+                        class="mt-1 p-2 w-full border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="Nomor Meja"
+                    >
+                </div>
+                <button 
+                    type="submit" 
+                    class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
+                >
+                    Masuk
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Handle form submission and save to localStorage
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const nomorMeja = document.getElementById('nomorMeja').value;
+
+            // Save the nomorMeja to localStorage
+            localStorage.setItem('nomorMeja', nomorMeja);
+
+            // Redirect to the user main page
+            window.location.href = './user/pesan.html';
+        });
+    </script>
+
+</body>
+</html>

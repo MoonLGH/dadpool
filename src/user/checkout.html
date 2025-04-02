@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Pemesanan Makanan & Minuman</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.7/dist/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <div class="container mx-auto p-6">
+        <!-- Header -->
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-semibold">Checkout</h2>
+            <a href="pesan.html" class="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition duration-200">Kembali</a>
+        </div>
+
+        <!-- Table Number -->
+        <div class="mb-6">
+            <p class="text-lg font-semibold">Nomor Meja: <span id="nomorMeja"></span></p>
+        </div>
+
+        <!-- Order List -->
+        <div id="orderList" class="mb-6">
+            <!-- List Pesanan akan dimuat disini -->
+        </div>
+
+        <!-- Total Price -->
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-semibold">Total:</h3>
+            <p id="totalPrice" class="text-xl font-bold text-blue-600">Rp 0</p>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="mt-6">
+            <h3 class="text-xl font-semibold mb-4">Metode Pembayaran</h3>
+            <div class="space-y-4">
+                <button class="w-full bg-green-500 text-white py-2 rounded-lg hover:bg-green-600 transition duration-200" id="cashButton">Cash</button>
+                <button class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200" id="qrisButton">QRIS</button>
+            </div>
+        </div>
+
+        <!-- Final Confirmation -->
+        <div class="mt-6 text-center">
+            <button class="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition duration-200" id="confirmOrderButton">Konfirmasi Pesanan</button>
+        </div>
+    </div>
+
+    <script>
+        // Get nomor meja from localStorage
+        const nomorMeja = localStorage.getItem('nomorMeja');
+        document.getElementById('nomorMeja').textContent = nomorMeja;
+
+        // Get cart from localStorage
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        // Function to render the order list
+        function renderOrderList() {
+            const orderList = document.getElementById('orderList');
+            orderList.innerHTML = '';
+
+            if (cart.length === 0) {
+                orderList.innerHTML = `<p class="text-center text-gray-500">Keranjang Anda kosong.</p>`;
+                return;
+            }
+
+            let total = 0;
+
+            cart.forEach(item => {
+                const orderItem = document.createElement('div');
+                orderItem.classList.add('flex', 'justify-between', 'items-center', 'mb-4', 'p-4', 'bg-white', 'rounded-lg', 'shadow-md');
+                orderItem.innerHTML = `
+                    <div>
+                        <p class="font-semibold">${item.name}</p>
+                        <p class="text-sm text-gray-500">Rp ${item.price.toLocaleString()}</p>
+                    </div>
+                    <p class="font-semibold text-blue-600">Rp ${item.price.toLocaleString()}</p>
+                `;
+                orderList.appendChild(orderItem);
+                total += item.price;
+            });
+
+            // Update total price
+            document.getElementById('totalPrice').textContent = `Rp ${total.toLocaleString()}`;
+        }
+
+        // Render the order list when the page loads
+        renderOrderList();
+
+        // Payment method buttons
+        const cashButton = document.getElementById('cashButton');
+        const qrisButton = document.getElementById('qrisButton');
+
+        cashButton.addEventListener('click', () => {
+            alert('Metode Pembayaran: Cash');
+            localStorage.setItem("metode","cash")
+        });
+
+        qrisButton.addEventListener('click', () => {
+            alert('Scan QRIS yang ada di table lalu tunjukan');
+            localStorage.setItem("metode","qris")
+        });
+
+        // Confirm Order Button
+        const confirmOrderButton = document.getElementById('confirmOrderButton');
+        confirmOrderButton.addEventListener('click', () => {
+            if (cart.length === 0) {
+                alert('Keranjang Anda kosong, tidak ada pesanan untuk dikonfirmasi.');
+                return;
+            }
+
+            // You can handle order submission logic here (e.g., send to server)
+
+            alert('Pesanan Anda berhasil dikonfirmasi!');
+            // Clear the cart after confirmation
+            localStorage.removeItem('cart');
+            window.location.href = '/user/finishorder.html'; // Redirect back to the main page
+        });
+    </script>
+
+</body>
+</html>
