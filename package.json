@@ -5,7 +5,8 @@
     "dev": "parcel src/**/*.html",
     "buildsrc" : "parcel build src/*.html",
     "build": "parcel build src/**/*.html ",
-    "buildNotRoot": "parcel build --public-url /dadpool/ src/**/*.html"
+    "buildNotRoot": "parcel build --public-url /dadpool/ src/**/*.html",
+    "buildNotRootsrc": "parcel build --public-url /dadpool/ src/*.html"
   },
   "dependencies": {
     "autoprefixer": "^10.4.21",
