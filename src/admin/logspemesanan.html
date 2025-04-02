@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logs Pemesanan - Admin Panel</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.7/dist/flowbite.min.js"></script>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Sidebar -->
+    <div class="flex">
+        <div class="bg-blue-600 text-white w-64 min-h-screen p-6">
+            <h2 class="text-2xl font-semibold mb-8">Admin Panel</h2>
+            <ul>
+                <li><a href="panel.html" class="block py-2 px-4 rounded-lg hover:bg-blue-700">Dashboard</a></li>
+                <li><a href="editstok.html" class="block py-2 px-4 rounded-lg hover:bg-blue-700">Kelola Stok</a></li>
+                <li><a href="logspemesanan.html" class="block py-2 px-4 rounded-lg bg-blue-700">Logs Pemesanan</a></li>
+            </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="flex-1 p-6">
+            <h2 class="text-3xl font-semibold mb-6">Logs Pemesanan</h2>
+
+            <!-- Log Pemesanan -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-4">Riwayat Pemesanan</h3>
+                <table class="min-w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="py-2 px-4 text-left">Waktu</th>
+                            <th class="py-2 px-4 text-left">Nomor Meja</th>
+                            <th class="py-2 px-4 text-left">Pesanan</th>
+                            <th class="py-2 px-4 text-left">Total Harga</th>
+                            <th class="py-2 px-4 text-left">Metode Pembayaran</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orderLogs">
+                        <!-- Data log pemesanan akan dimuat di sini -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Log Perubahan Stok -->
+            <div class="mb-6">
+                <h3 class="text-xl font-semibold mb-4">Riwayat Perubahan Stok</h3>
+                <table class="min-w-full bg-white rounded-lg shadow-md">
+                    <thead>
+                        <tr class="border-b">
+                            <th class="py-2 px-4 text-left">Waktu</th>
+                            <th class="py-2 px-4 text-left">Item</th>
+                            <th class="py-2 px-4 text-left">Perubahan</th>
+                            <th class="py-2 px-4 text-left">Stok Setelah</th>
+                        </tr>
+                    </thead>
+                    <tbody id="stockLogs">
+                        <!-- Data log stok akan dimuat di sini -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Sample log pemesanan (bisa diambil dari database nanti)
+        const orderLogs = [
+            { time: "2025-04-03 12:15", table: "A1", items: ["Nasi Goreng", "Es Teh"], total: 35000, payment: "Cash" },
+            { time: "2025-04-03 12:30", table: "A2", items: ["Mie Goreng", "Es Jeruk"], total: 34000, payment: "QRIS" },
+            // Tambahkan log lain jika diperlukan
+        ];
+
+        // Sample log perubahan stok
+        const stockLogs = [
+            { time: "2025-04-03 11:00", item: "Nasi Goreng", change: "-5", finalStock: 45 },
+            { time: "2025-04-03 11:30", item: "Es Teh", change: "-10", finalStock: 90 },
+            { time: "2025-04-03 12:00", item: "Mie Goreng", change: "-3", finalStock: 27 },
+            // Tambahkan log lain jika diperlukan
+        ];
+
+        // Render log pemesanan
+        function renderOrderLogs() {
+            const orderTable = document.getElementById('orderLogs');
+            orderTable.innerHTML = '';
+
+            orderLogs.forEach(log => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+                row.innerHTML = `
+                    <td class="py-2 px-4">${log.time}</td>
+                    <td class="py-2 px-4">${log.table}</td>
+                    <td class="py-2 px-4">${log.items.join(', ')}</td>
+                    <td class="py-2 px-4">Rp ${log.total.toLocaleString()}</td>
+                    <td class="py-2 px-4">${log.payment}</td>
+                `;
+                orderTable.appendChild(row);
+            });
+        }
+
+        // Render log perubahan stok
+        function renderStockLogs() {
+            const stockTable = document.getElementById('stockLogs');
+            stockTable.innerHTML = '';
+
+            stockLogs.forEach(log => {
+                const row = document.createElement('tr');
+                row.classList.add('border-b');
+                row.innerHTML = `
+                    <td class="py-2 px-4">${log.time}</td>
+                    <td class="py-2 px-4">${log.item}</td>
+                    <td class="py-2 px-4">${log.change}</td>
+                    <td class="py-2 px-4">${log.finalStock}</td>
+                `;
+                stockTable.appendChild(row);
+            });
+        }
+
+        // Initialize logs
+        renderOrderLogs();
+        renderStockLogs();
+    </script>
+
+</body>
+</html>
